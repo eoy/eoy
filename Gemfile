@@ -43,3 +43,47 @@ gem "high_voltage"
 gem "simple_form"
 gem "flutie"
 gem "newrelic_rpm"
+gem 'devise'
+gem 'figaro', :github=>"laserlemon/figaro"
+gem 'foundation-rails'
+gem 'pg'
+gem 'pundit'
+gem 'sendgrid'
+gem 'simple_form'
+
+group :development do
+  gem 'better_errors'
+  gem 'binding_of_caller', :platforms=>[:mri_20]
+  gem 'guard-bundler'
+  gem 'guard-rails'
+  gem 'guard-rspec'
+  gem 'hub', :require=>nil
+  gem 'quiet_assets'
+  gem 'rails_apps_pages'
+  gem 'rails_apps_testing'
+  gem 'rails_layout'
+  gem 'rb-fchange', :require=>false
+  gem 'rb-fsevent', :require=>false
+  gem 'rb-inotify', :require=>false
+end
+
+group :development, :test do
+  gem 'factory_girl_rails'
+  gem 'pry-rails'
+  gem 'pry-rescue'
+  gem 'puma'
+  gem 'rspec-rails', '>= 3.0.0.beta2'
+end
+
+group :production do
+  gem 'unicorn'
+end
+
+group :test do
+  gem 'capybara'
+  gem 'database_cleaner'
+  gem 'faker'
+  gem 'launchy'
+  gem 'selenium-webdriver'
+end
+
