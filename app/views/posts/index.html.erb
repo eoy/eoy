@@ -1,0 +1,20 @@
+<div class="full-width-row">
+  <div class="image-container text-center" style="background: url('/assets/bg4.jpg') 50% 50% no-repeat transparent; background-size: cover; min-height: 600px; vertical-align: middle;">
+    <div class="title">
+      <h1>
+        <a href="/how-to-share-a-session-between-sinatra-and-rails">
+          eoy.io
+        </a>
+      </h1>
+      <h4 class="subheader">
+        Ramblings of a Full-stack Developer
+      </h4>
+    </div>
+  </div>
+</div>
+
+<div class="content row posts-list">
+  <section id="main" class="medium-12 columns"  style="min-height: 1500px">
+    <%= render partial: 'post_excerpt', collection: @posts, as: :post %>
+  </section>
+</div>

@@ -5,18 +5,30 @@
     <title><%= content_for?(:title) ? yield(:title) : "Eoy" %></title>
     <meta name="description" content="<%= content_for?(:description) ? yield(:description) : "Eoy" %>">
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
+    <script type="text/javascript" src="//use.typekit.net/azl1otu.js"></script>
+    <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
     <%# Modernizr is required for Zurb Foundation %>
     <%= javascript_include_tag 'vendor/modernizr' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
     <%= csrf_meta_tags %>
   </head>
-  <body>
+  <body class="<%= body_class %>">
+    <%= disqus_init %>
     <header>
       <%= render 'layouts/navigation' %>
+      <%= render 'layouts/messages' %>
     </header>
-    <main role="main">
-       <%= render 'layouts/messages' %>
-       <%= yield %>
-    </main>
+    <div id="perspective" class="effect-moveleft perspective modalview">
+      <div class="container">
+        <div class="wrapper">
+          <%= yield %>
+        </div>
+      </div>
+      <nav class="outer-nav right vertical">
+        <%= link_to fa_icon("book", text: 'Blog', class: 'fa-fw').html_safe, posts_path, remote: true %>
+        <%= link_to fa_icon("user", text: 'About', class: 'fa-fw').html_safe, page_path('about'), remote: true %>
+        <%= link_to fa_icon("envelope-o", text: 'Contact', class: 'fa-fw').html_safe, page_path('contact'), remote: true %>
+      </nav>
+    </div>
   </body>
 </html>

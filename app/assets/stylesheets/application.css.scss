@@ -1,15 +1,269 @@
 /*
- * This is a manifest file that'll be compiled into application.css, which will include all the files
- * listed below.
- *
- * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
- * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
- *
- * You're free to add application-wide styles to this file and they'll appear at the bottom of the
- * compiled file so the styles you add here take precedence over styles defined in any styles
- * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
- * file per style scope.
- *
- *= require_tree .
  *= require_self
  */
+@import 'type';
+@import 'framework_and_overrides';
+@import 'bourbon';
+@import 'effect';
+@import 'syntax';
+@import 'font-awesome';
+@import 'timeline';
+
+$margin: 30px;
+
+html, body {
+  font-size: 20px;
+}
+
+.content > aside {
+  background: none;
+  text-align: right;
+  margin-top: 90px !important;
+  border-right: 1px solid #EEE;
+  padding: 5px 45px !important;
+  .avatar {
+    display: inline-block;
+    margin-bottom: 15px;
+  }
+  p {
+    font-size: 12px;
+    color: #aaa;
+  }
+  a {
+    color: #999;
+  }
+}
+
+body > main {
+  margin-top: 51px;
+}
+
+article {
+  margin-top: 51px;
+  max-width: 980px;
+  padding: $margin !important;
+  h1 {
+    line-height: 1.3em;
+    a {
+      color: #333;
+      font-weight: bold;
+      &:hover {
+        color: #333;
+      };
+    }
+  }
+}
+
+code {
+  color: tomato;
+  font-size: 16px;
+  font-weight: normal;
+  overflow-x: auto;
+  max-width: 100%;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+pre {
+  @include panel;
+  margin-bottom: $margin;
+}
+
+h1 {
+  font-size: 52.358px;
+  margin-bottom: $margin;
+}
+
+h2 {
+  margin-bottom: $margin;
+}
+
+.main-nav {
+  background: rgba(255,255,255,0);
+  padding: 15px;
+  width: 100%;
+  @include transition(all 0.85s);
+  @include transform(translate3d(0,0,0));
+  a.brand {
+    color: white;
+    font-family: $header-font;
+    @include transition(all 0.6s);
+    @include transition-delay(0.6s);
+  }
+  a.menu {
+    color: white;
+    font-family: $header-font;
+    font-size: 14px;
+    font-weight: bold;
+    letter-spacing: 0.02em;
+    top: -2px;
+    position: relative;
+    @include transition(all 0.6s);
+    @include transition-delay(0.6s);
+  }
+  &.headroom--top a.brand {
+    color: white;
+  }
+  &.headroom--not-top {
+    background: rgba(255,255,255,0.9);
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.07);
+    a.brand {
+      color: tomato;
+    }
+    a.menu {
+      color: #333;
+    }
+  }
+  &.headroom--top {
+    // @include transform(translateY(0));
+    top: 0;
+  }
+  &.headroom--pinned {
+    // @include transform(translateY(0));
+    top: 0;
+  }
+  &.headroom--unpinned {
+    top: -51px;
+    // @include transform(translateY(-51px));
+  }
+}
+
+.posts-edit .headroom--top {
+  background: tomato;
+}
+
+.pages-show {
+  .main-nav {
+    a.brand {
+      color: tomato !important;
+    }
+    a.menu {
+      color: #333 !important;
+    }
+  }
+}
+
+p {
+  color: #444;
+  margin-bottom: $margin;
+  letter-spacing: 0.01rem;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 20px;
+  line-height: 1.5em;
+}
+
+.full-width-row {
+  @include grid-row;
+  max-width: 100%;
+  position: relative;
+}
+
+.image-container {
+  -webkit-transition-timing-function: cubic-bezier(0.7,0,0.3,1);
+  transition-timing-function: cubic-bezier(0.7,0,0.3,1);
+  -webkit-transition-duration: 1.2s;
+  transition-duration: 1.2s;
+  display: table;
+  width: 100%;
+  height: 600px;
+  &.headroom--not-top {
+    @include transform(translateY(-100%) scale(0.9));
+    // margin-bottom: -500px;
+    // opacity: 0.2;
+    .title {
+      // top: 45%;
+    }
+  }
+}
+
+.title {
+  padding: 0 20%;
+  position: relative;
+  vertical-align: middle;
+  margin: 0 auto;
+  display: table-cell;
+  max-width: 60%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  @include transition(top 1.2s);
+  @include transition-delay(0.4s);
+  a {
+    color: #fff;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+  }
+  h4 {
+    line-height: 1.4;
+    color: #8FA2B8;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    margin-top: -20px;
+    font-size: 19px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+  }
+}
+
+.post-body p:first-child:first-line {
+  font-variant: all-small-caps;
+}
+
+.post-body > p:first-child:first-letter {
+  font-size: 2.5em;
+  color: tomato;
+  text-transform: none;
+}
+
+.post-body > p + p:first-letter {
+  font-size: 20px;
+}
+
+#disqus_thread {
+  padding: 30px;
+  iframe {
+    background: none;
+    padding: 0;
+  }
+}
+
+.post-excerpt {
+  h3 {
+    a {
+      color: #333;
+      font-size: 24px;
+      font-weight: bold;
+      letter-spacing: 0.01em;
+    }
+  }
+}
+
+.posts-list {
+  article {
+    margin-top: 0;
+  }
+  aside {
+    margin-top: 30px;
+    text-align: right;
+    border-right: 1px solid #EEE;
+    padding-right: 30px;
+    p {
+      margin-top: 18px;
+      min-height: 60px;
+      font-size: 16px;
+    }
+  }
+}
+
+.hero {
+  padding: 5%;
+  h3 {
+    font-weight: bold;
+    text-transform: none;
+    em {
+      font-style: normal;
+      border-bottom: 4px solid;
+      line-height: 1.1em;
+      display: inline-block;
+    }
+  }
+}

@@ -20,12 +20,21 @@ gem 'pg'
 gem 'pundit'
 gem 'sendgrid'
 gem 'simple_form'
+gem 'modular-scale'
+gem 'bourbon'
+gem 'friendly_id'
+gem 'redcarpet'
+gem 'rouge'
+gem 'rolify'
+gem 'disqus_rails'
+gem "font-awesome-rails"
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller', :platforms=>[:mri_20]
   gem 'guard-bundler'
   gem 'guard-rails'
   gem 'guard-rspec'
+  gem 'guard-livereload'
   gem 'hub', :require=>nil
   gem 'quiet_assets'
   gem 'rails_layout'
@@ -35,8 +44,8 @@ group :development do
 end
 group :development, :test do
   gem 'factory_girl_rails'
-  gem 'pry-rails'
-  gem 'pry-rescue'
+  # gem 'pry-rails'
+  # gem 'pry-rescue'
   gem 'puma'
   gem 'rspec-rails', '>= 3.0.0.beta2'
 end

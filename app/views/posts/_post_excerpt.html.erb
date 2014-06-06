@@ -1,0 +1,15 @@
+<aside class="medium-3 columns show-for-medium-up">
+  <p>
+    <%= post.created_at.to_date.to_formatted_s(:long) %>
+  </p>
+</aside>
+
+<div class="medium-9 columns">
+  <article>
+    <div class="post-excerpt">
+      <h3><%= link_to post.title, post %></h3>
+      <%= simple_format(post.excerpt) || truncate(strip_tags(post.content), :length => 120, separator: " ", :omission => "...", escape: false ) %>
+    </div>
+  </article>
+  <hr class="show-for-small-only">
+</div>

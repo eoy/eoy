@@ -1,0 +1,157 @@
+/* Effect Move Left */
+.effect-moveleft.animate {
+    // background: #f4f3f1;
+    background: #D5D6D6;
+}
+ 
+.effect-moveleft .container {
+    @include transition(all 0.4s);
+    @include transform-origin(50% 50%);
+    @include transform(translateX(0) rotateY(0deg) translateZ(0));
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    z-index: 6;
+}
+ 
+.effect-moveleft.animate .container::after {
+    background: rgba(255, 255, 255, 0.6);
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    z-index: 501;
+    bottom: 0;
+    content: "";
+    display: block;
+    @include transition(all 0.4s);
+}
+
+.effect-moveleft.animate .top::after {
+  top: -100% !important;
+}
+
+.effect-moveleft.animate .container:hover {
+  @include transform(translateX(-50%) rotateY(40deg) translateZ(-50px));
+  &:after {
+    background: rgba(255, 255, 255, 0.3);
+  }
+}
+ 
+.effect-moveleft.animate .container {
+    @include transform(translateX(-50%) rotateY(45deg) translateZ(-50px));
+    // opacity: 0.6;
+}
+ 
+/* Fallback */
+// .no-csstransforms3d .effect-moveleft.animate .container {
+//     left: -75%;
+// }
+ 
+/* Navigation */
+.effect-moveleft .outer-nav a {
+    color: #e86a32;
+    opacity: 0;
+    @include transform(translateX(100px) translateZ(-1000px));
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    @include transition(transform 0.4s, opacity 0.4s);
+}
+ 
+.effect-moveleft .outer-nav a:hover {
+    color: #333;
+}
+ 
+.effect-moveleft.animate .outer-nav a {
+    opacity: 1;
+    @include transform(translateX(0) translateZ(0));
+}
+ 
+.effect-moveleft.animate .outer-nav a:nth-child(2) {
+    transition-delay: 0.04s;
+}
+ 
+.effect-moveleft.animate .outer-nav a:nth-child(3) {
+    transition-delay: 0.08s;
+}
+ 
+.effect-moveleft.animate .outer-nav a:nth-child(4) {
+    transition-delay: 0.12s;
+}
+ 
+.effect-moveleft.animate .outer-nav a:nth-child(5) {
+    transition-delay: 0.16s;
+}
+ 
+.effect-moveleft.animate .outer-nav a:nth-child(6) {
+    transition-delay: 0.2s;
+}
+ 
+.effect-moveleft.animate .outer-nav a:nth-child(7) {
+    transition-delay: 0.24s;
+}
+.perspective {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+  &.animate .modalview {
+    z-index: 400;
+  }
+}
+.container {
+  position: relative;
+}
+.modalview {
+  @include perspective(1500px);
+  .container {
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-transform: translateZ(0) translateX(0) rotateY(0deg);
+    transform: translateZ(0) translateX(0) rotateY(0deg);
+  }
+}
+
+.perspective.animate .container {
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.modalview .wrapper {
+  position: relative;
+  @include transform(translateZ(1px));
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  z-index: 500;
+  height: 100%;
+}
+
+.outer-nav.right {
+  right: 25%;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  position: absolute;
+  height: auto;
+  font-size: 2em;
+  a {
+    display: block;
+    font-size: 32.360px;
+    margin-bottom: 30px;
+    color: #7E7E7E;
+    &:hover {
+      @include transform(scale(1.05));
+    }
+    i {
+      color: #FF7157;
+      margin-right: 14px;
+      font-size: 26px;
+      top: -1px;
+      position: relative;
+    }
+  }
+}

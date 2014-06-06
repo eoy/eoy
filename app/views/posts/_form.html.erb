@@ -1,0 +1,85 @@
+<!-- <p id="notice"><%= notice %></p> -->
+
+<div class="content row">
+  <aside class="medium-3 columns show-for-medium-up">
+    <div class="avatar">
+      <%= image_tag "joakim.jpg", alt: 'Joakim Runeberg' %>
+    </div>
+    <p>
+      Written 18:38 by <i class="author" style="display: inline-block">Joakim Runeberg</i><br />
+      Full-stack Developer at <a href="http://milkpluschocolate.com" target="_blank">Milk+Chocolate</a>
+    </p>
+  </aside>
+
+  <section id="main" class="medium-9 columns" style="min-height: 1500px">
+    <article>
+      <div class="post-body">
+        <%= simple_form_for(@post) do |f| %>
+          <%= f.error_notification %>
+
+          <div class="form-inputs">
+            <%= f.input :title %>
+            <%= f.input :excerpt %>
+            <%= f.input :body do %>
+              <%= f.text_area :body, :class => "hide" %>
+              <div id="epiceditor">
+              </div>
+              <br />
+            <% end %>
+            <script type="text/javascript">
+            var opts = {
+              container: 'epiceditor',
+              textarea: 'post_body',
+              basePath: '/assets',
+              clientSideStorage: true,
+              localStorageName: 'epiceditor',
+              useNativeFullscreen: true,
+              parser: marked,
+              file: {
+                name: 'epiceditor',
+                defaultContent: '',
+                autoSave: 100
+              },
+              theme: {
+                base: '<%= asset_path("/themes/base/epiceditor.css") %>',
+                preview: '<%= asset_path("/themes/preview/github.css") %>',
+                editor: '<%= asset_path("/themes/editor/epic-light.css") %>'
+              },
+              button: {
+                preview: true,
+                fullscreen: true,
+                bar: "auto"
+              },
+              focusOnLoad: false,
+              shortcut: {
+                modifier: 18,
+                fullscreen: 70,
+                preview: 80
+              },
+              string: {
+                togglePreview: 'Toggle Preview Mode',
+                toggleEdit: 'Toggle Edit Mode',
+                toggleFullscreen: 'Enter Fullscreen'
+              },
+              autogrow: true
+            }
+            var editor = new EpicEditor(opts).load();
+            </script>
+            <%= f.input :header_image %>
+            <%= f.input :image %>
+          </div>
+
+          <div class="form-actions">
+            <%= f.submit class: 'button small' %>
+          </div>
+        <% end %>
+
+        <%= link_to 'Edit', edit_post_path(@post) %> |
+        <%= link_to 'Back', posts_path %>
+      </div>
+    </article>
+  </section>
+</div>
+
+
+

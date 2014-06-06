@@ -1,0 +1,19 @@
+<!-- <p id="notice"><%= notice %></p> -->
+<div class="full-width-row">
+  <div class="image-container text-center" style="background: url('/assets/bg.jpg') 50% 50% no-repeat transparent; background-size: cover; min-height: 600px; vertical-align: middle;">
+    <div class="title">
+      <h1>
+        <%= link_to @post.title, @post %>
+      </h1>
+    </div>
+  </div>
+</div>
+
+<div class="content row">
+  <% cache @post do %>
+    <%= render @post %>
+  <% end %>
+  <div class="medium-9 columns medium-offset-3">
+    <%- disqus_thread @post.id %>
+  </div>
+</div>

@@ -1,0 +1,30 @@
+
+<aside class="medium-3 columns show-for-medium-up">
+  <div class="avatar">
+    <%= image_tag "joakim.jpg", alt: 'Joakim Runeberg' %>
+  </div>
+  <p>
+    Written 18:38 by <i class="author" style="display: inline-block">Joakim Runeberg</i><br />
+    Full-stack Developer at <a href="http://milkpluschocolate.com" target="_blank">Milk+Chocolate</a>
+  </p>
+  <p>
+    <%= link_to "&larr; Back to all posts".html_safe, posts_path %>
+  </p>
+</aside>
+
+<section id="main" class="medium-9 columns"  style="min-height: 600px">
+  <article>
+    <div class="post-body">
+      <% if post.excerpt %>
+        <%= simple_format post.excerpt %>
+        <hr>
+        <br>
+      <% end %>
+      <%= post.content.html_safe %>
+      <% if policy(post).update? %>
+        <hr />
+        <%= link_to "Edit post", edit_post_path(post), class: 'button tiny secondary right' %>
+      <% end %>
+    </div>
+  </article>
+</section>

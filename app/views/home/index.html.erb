@@ -1,0 +1,129 @@
+<div class="full-width-row">
+  <div class="image-container text-center" style="background: url('/assets/bg.jpg') 50% 50% no-repeat transparent; background-size: cover; min-height: 600px; vertical-align: middle;">
+    <div class="title">
+      <h1>
+        <a href="/how-to-share-a-session-between-sinatra-and-rails">
+          How to Share a Session Between Sinatra and Rails
+        </a>
+      </h1>
+    </div>
+  </div>
+</div>
+
+<div class="content row">
+  <aside class="medium-3 columns show-for-medium-up">
+    <div class="avatar">
+      <%= image_tag "joakim.jpg", alt: 'Joakim Runeberg' %>
+    </div>
+    <p>
+      Written 18:38 by <i class="author" style="display: inline-block">Joakim Runeberg</i><br />
+      Full-stack Developer at <a href="http://milkpluschocolate.com" target="_blank">Milk+Chocolate</a>
+    </p>
+  </aside>
+
+  <section id="main" class="medium-9 columns">
+    <article>
+      <div class="post-body">
+        <p>As Rails developers, we run into Sinatra apps all the time: gems such as Resque
+        which expose a dashboard via Sinatra, legacy Sinatra apps that run alongside a
+        main Rails app, and Sinatra APIs embedded within a Rails app, to name a few
+        examples. Here’s a common problem: how do you share authentication between the
+        apps?</p>
+
+        <p>It would be really convenient to be able to do something like this in our
+        Sinatra app:</p>
+
+        <pre><code class=" hljs sql">get '/dashboard' <span class="operator"><span class="keyword">do</span>
+          <span class="keyword">if</span> <span class="keyword">session</span>[:user_id].present?
+            redirect <span class="keyword">to</span>(<span class="string">'/'</span>)
+          <span class="keyword">else</span>
+            # <span class="keyword">set</span> up <span class="keyword">and</span> render dashboard
+          <span class="keyword">end</span>
+        <span class="keyword">end</span>
+        </span></code></pre>
+
+        <p>Both Rails and Sinatra are Rack-based, which makes them play surprisingly well
+        together. They can be combined in two ways: via <code>Rack::Builder</code> or via the Rails routes.</p>
+
+        <h2>Rack::Builder</h2>
+
+        <p>This method treats Rails as just another Rack app. It creates a middleware
+        stack and mounts the apps at particular urls</p>
+
+        <pre><code class=" hljs cs"><span class="preprocessor"># config.ru</span>
+        map <span class="string">'/api'</span> <span class="keyword">do</span>
+          run MySinatraApp.<span class="keyword">new</span>
+        end
+
+        map <span class="string">'/'</span> <span class="keyword">do</span>
+          run MyRailsApp::Application.<span class="keyword">new</span>
+        end
+        </code></pre>
+
+        <p>The standard way to handle authentication in Rails is via a session that is
+        stored in the client’s browser via a cookie. This cookie is base64 encoded in
+        Rails 3.x and encrypted in Rails 4.x. In order to read and write from the
+        session, Rails uses a few middlewares. They (along with the other
+        middlewares that come by default with Rails) can be seen by running <code>rake
+        middleware</code>.</p>
+
+        <ul>
+        <li>ActionDispatch::Cookies</li>
+        <li>ActionDispatch::Session::CookieStore</li>
+        <li>Other middlewares</li>
+        </ul>
+
+        <p>In order for the Sinatra app to be able to read/write from the Rails session,
+        it needs to have those two middlewares in its stack. The middleware needs
+        to know the name of the cookie that the session is stored in. Finally, the
+        middleware also needs to know the secret token used for signing and encrypting
+        the cookie</p>
+
+        <pre><code class=" hljs perl"><span class="comment"># config.ru</span>
+        <span class="keyword">map</span> <span class="string">'/api'</span> <span class="keyword">do</span>
+          <span class="keyword">use</span> Rack::Config <span class="keyword">do</span> |env| <span class="keyword">do</span>
+            env[ActionDispatch::Cookies::TOKEN_KEY] = MyRailsApp::Application.config.secret_token
+          end
+          <span class="keyword">use</span> ActionDispatch::Cookies
+          <span class="keyword">use</span> ActionDispatch::Session::CookieStore, key: <span class="string">'_my_rails_app_session'</span>
+          run MySinatraApp.new
+        end
+
+        <span class="keyword">map</span> <span class="string">'/'</span> <span class="keyword">do</span>
+          run MyRailsApp::Application.new
+        end
+        </code></pre>
+
+        <h2>Rails routes</h2>
+
+        <p>In the previous approach, both the Sinatra and Rails apps were first-class
+        citizens loaded via <code>config.ru</code>. An easier approach is to load all the Sinatra
+        apps via the Rails router. This automatically gives them access to the
+        middlewares loaded (and configured) by Rails.</p>
+
+        <pre><code class=" hljs php">MyRailsApp::Application.routes.draw <span class="keyword">do</span>
+          mount MySinatraApp.<span class="keyword">new</span> =&gt; <span class="string">'/api'</span>
+        end
+        </code></pre>
+
+        <p>This works because the HTTP request travels through the Rails middleware stack
+        before reaching the router which then sends it to the proper app. When using
+        <code>config.ru</code>, the request is immediately routed to either the Sinatra app or the
+        Rails app so we need to manually add the middleware in front of the Sinatra app.</p>
+
+        <h2>Which approach to take?</h2>
+
+        <p>Mounting a Sinatra app via the Rails routes is the standard way to embed a
+        Sinatra app within a Rails app. Since they both share the same middleware
+        stack, you get shared sessions for free. However, if you need a custom
+        middleware stack for your Sinatra app then the <code>Rack::Builder</code> approach is the
+        way to go.</p>
+
+        <h2>Further reading</h2>
+
+        <p>Learn more about <a href="http://guides.rubyonrails.org/rails_on_rack.html">Rails and Rack</a></p>
+      </div>
+    </article>
+  </section>
+
+</div>
