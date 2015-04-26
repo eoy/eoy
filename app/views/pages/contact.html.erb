@@ -1,0 +1,44 @@
+<div class="full-width-row">
+  <div class="image-container text-center" style="background: url('/assets/bg4.jpg') 50% 50% no-repeat transparent; background-size: cover; min-height: 600px; vertical-align: middle;">
+    <div class="title">
+      <h1>
+        <a href="/contact">
+          Lets get in touch!
+        </a>
+      </h1>
+      <h4 class="subheader">Just fill out the form below or drop an email to<br />
+        <span id="obf" class="ib" style="margin-top: 15px; display: inline-block;"><script>document.getElementById("obf").innerHTML="<n uers=\"znvygb:wbnxvz.eharoret@tznvy.pbz\" gnetrg=\"_oynax\">wbnxvz.eharoret@tznvy.pbz</n>".replace(/[a-zA-Z]/g,function(c){return String.fromCharCode((c<="Z"?90:122)>=(c=c.charCodeAt(0)+13)?c:c-26);});document.body.appendChild(eo);</script>
+      </h4>
+    </div>
+  </div>
+</div>
+
+<div class="content row">
+  <aside class="medium-3 columns show-for-medium-up">
+    <div class="avatar">
+      <%= image_tag "joakim.jpg", alt: 'Joakim Runeberg' %>
+    </div>
+    <p>
+      <h5 class="">Joakim Runeberg</h5>
+      <p>Full-stack Developer at <a href="http://milkpluschocolate.com" target="_blank">Milk+Chocolate</a></p>
+    </p>
+  </aside>
+
+  <section id="main" class="medium-9 columns">
+    <%= simple_form_for Message.new, :url => contact_path, :method => :post do |form| %>
+      <fieldset>
+        <%= form.input :name %>
+        <%= form.input :email %>
+        <%= form.input :subject %>
+        <div class="field">
+          <%= form.label :body %>
+          <%= form.text_area :body %>
+        </div>
+        <div class="form-actions">
+          <%= form.submit "Send message", :class => 'btn btn-primary', :disable_with => "Sending..." %>
+        </div>
+      </fieldset>
+    <% end %>
+  </section>
+
+</div>

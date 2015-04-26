@@ -3,6 +3,10 @@ class PagesController < ApplicationController
 
   layout :layout_for_page
 
+  def contact
+    @message = Message.new
+  end
+
   private
 
   def layout_for_page
